@@ -332,6 +332,8 @@
             position: relative;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            cursor: pointer;
+            /* 提示可点击 */
         }
 
         .portfolio-item img {
@@ -376,7 +378,7 @@
             color: rgba(255, 255, 255, 0.8);
         }
 
-        /* 客户评价 */
+        /* 客户评价 - 修改为多列展示样式 */
         .testimonials {
             background: linear-gradient(135deg, var(--secondary-color), #34495e);
             color: var(--white);
@@ -391,28 +393,48 @@
             color: rgba(255, 255, 255, 0.8);
         }
 
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
         }
 
         .testimonial-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--white);
+            /* 根据图片三背景为白色 */
             padding: 40px;
             border-radius: var(--border-radius);
-            backdrop-filter: blur(10px);
-            margin: 20px;
+            box-shadow: var(--shadow);
+            color: var(--dark-text);
+            /* 文字颜色适配白色背景 */
+            position: relative;
+            transition: var(--transition);
+        }
+
+        /* 模拟图片中的引号装饰 */
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            color: var(--primary-color);
+            font-family: serif;
+            opacity: 0.8;
         }
 
         .testimonial-text {
-            font-size: 1.2rem;
-            font-style: italic;
-            margin-bottom: 20px;
+            font-size: 1rem;
+            margin-bottom: 30px;
             line-height: 1.8;
+            margin-top: 20px;
         }
 
         .client-info {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
@@ -421,77 +443,56 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: var(--primary-color);
+            background: #007bff;
+            /* 图片中的蓝色头像背景 */
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
+            margin-bottom: 15px;
             font-size: 1.5rem;
+            color: white;
         }
 
         .client-details h4 {
             margin-bottom: 5px;
+            color: var(--secondary-color);
         }
 
         .client-details p {
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--light-text);
+            font-size: 0.9rem;
         }
 
-        /* 联系我们 */
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
+        /* 联系我们 - 修改为居中布局，去掉表单 */
+        .contact-centered {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
         }
 
-        .contact-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: var(--secondary-color);
+        .contact-info-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
         }
 
         .contact-detail {
             display: flex;
-            align-items: flex-start;
-            margin-bottom: 25px;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
         .contact-icon {
-            font-size: 1.5rem;
+            font-size: 2rem;
             color: var(--primary-color);
-            margin-right: 15px;
-            min-width: 30px;
+            margin-bottom: 10px;
         }
 
         .contact-text h4 {
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             color: var(--dark-text);
-        }
-
-        .contact-form .form-group {
-            margin-bottom: 20px;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-size: 16px;
-            transition: var(--transition);
-        }
-
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-        }
-
-        .contact-form textarea {
-            height: 150px;
-            resize: vertical;
         }
 
         /* 页脚 */
@@ -606,8 +607,7 @@
                 font-size: 2.8rem;
             }
 
-            .about-content,
-            .contact-container {
+            .about-content {
                 grid-template-columns: 1fr;
             }
 
@@ -662,7 +662,6 @@
 </head>
 
 <body>
-    <!-- 导航栏 -->
     <header>
         <div class="container">
             <nav>
@@ -682,7 +681,6 @@
         </div>
     </header>
 
-    <!-- 主页横幅 -->
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>金顺设计</h1>
@@ -694,7 +692,6 @@
         </div>
     </section>
 
-    <!-- 关于我们 -->
     <section id="about" class="section">
         <div class="container">
             <h2 class="section-title">关于我们</h2>
@@ -716,7 +713,6 @@
         </div>
     </section>
 
-    <!-- 服务项目 -->
     <section id="services" class="section services">
         <div class="container">
             <h2 class="section-title">服务项目</h2>
@@ -756,71 +752,69 @@
         </div>
     </section>
 
-    <!-- 作品展示 -->
     <section id="portfolio" class="section">
         <div class="container">
             <h2 class="section-title">作品展示</h2>
             <p class="section-subtitle">我们为不同行业的客户创造了众多优秀的设计作品</p>
             <div class="portfolio-filters">
                 <button class="filter-btn active">全部</button>
-                <button class="filter-btn">品牌设计</button>
-                <button class="filter-btn">网页设计</button>
-                <button class="filter-btn">移动应用</button>
-                <button class="filter-btn">平面设计</button>
+                <button class="filter-btn">广告设计</button>
+                <button class="filter-btn">宣传物料设计</button>
+                <button class="filter-btn">住宅空间应用</button>
+                <button class="filter-btn">软装搭配设计</button>
             </div>
             <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/350x300/3498db/ffffff?text=品牌设计1" alt="品牌设计作品">
+                <div class="portfolio-item" onclick="window.open('image-1.jpg', '_blank')">
+                    <img src="image-1.jpg" alt="广告设计项目">
                     <div class="portfolio-overlay">
-                        <h3>品牌设计项目</h3>
-                        <p>为某知名企业重新设计品牌标识</p>
+                        <h3>广告设计项目</h3>
+                        <p>为企业设计品牌标识</p>
                     </div>
                 </div>
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/350x300/e74c3c/ffffff?text=网页设计1" alt="网页设计作品">
+                <div class="portfolio-item" onclick="window.open('image-2.png', '_blank')">
+                    <img src="image-2.png" alt="宣传物料设计项目">
                     <div class="portfolio-overlay">
-                        <h3>网页设计项目</h3>
-                        <p>企业官网设计与开发</p>
+                        <h3>宣传物料设计项目</h3>
+                        <p>为企业及工程项目设计宣传物料</p>
                     </div>
                 </div>
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/350x300/2ecc71/ffffff?text=APP设计1" alt="移动应用设计作品">
+                <div class="portfolio-item" onclick="window.open('image-3.png', '_blank')">
+                    <img src="image-3.png" alt="包装设计作品">
                     <div class="portfolio-overlay">
-                        <h3>移动应用设计</h3>
-                        <p>健康生活APP界面设计</p>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/350x300/f39c12/ffffff?text=品牌设计2" alt="品牌设计作品">
-                    <div class="portfolio-overlay">
-                        <h3>品牌设计项目</h3>
-                        <p>时尚品牌视觉识别系统</p>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/350x300/9b59b6/ffffff?text=平面设计1" alt="平面设计作品">
-                    <div class="portfolio-overlay">
-                        <h3>平面设计项目</h3>
+                        <h3>包装设计项目</h3>
                         <p>产品包装设计方案</p>
                     </div>
                 </div>
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/350x300/1abc9c/ffffff?text=网页设计2" alt="网页设计作品">
+                <div class="portfolio-item" onclick="window.open('iamge-4.png', '_blank')">
+                    <img src="iamge-4.png" alt="公司精装设计作品">
                     <div class="portfolio-overlay">
-                        <h3>网页设计项目</h3>
-                        <p>电商平台界面设计</p>
+                        <h3>住宅空间设计</h3>
+                        <p>为用户住宅或企业装潢设计效果图</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" onclick="window.open('image-5.png', '_blank')">
+                    <img src="image-5.png" alt="旧房改造设计作品">
+                    <div class="portfolio-overlay">
+                        <h3>旧房改造/局部翻新设计</h3>
+                        <p>对旧房屋进行整体或局部设计</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" onclick="window.open('image-6.png', '_blank')">
+                    <img src="image-6.png" alt="软装搭配作品">
+                    <div class="portfolio-overlay">
+                        <h3>软装搭配设计</h3>
+                        <p>为用户住宅进行全方位软装搭配设计</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 客户评价 -->
     <section id="testimonials" class="section testimonials">
         <div class="container">
             <h2 class="section-title">客户评价</h2>
             <p class="section-subtitle">听听我们的客户怎么说</p>
-            <div class="testimonial-slider">
+            <div class="testimonial-grid">
                 <div class="testimonial-card">
                     <p class="testimonial-text">"金顺设计团队非常专业，他们准确理解了我们的设计需求，无论是平面物料还是室内装潢都创作出令人印象深刻的设计方案。项目交付准时，质量超出预期。"
                     </p>
@@ -832,18 +826,36 @@
                         </div>
                     </div>
                 </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"设计团队的创意能力很强，能够将我们的想法转化为实际的设计作品。沟通顺畅，响应及时，是我们值得信赖的合作伙伴。"</p>
+                    <div class="client-info">
+                        <div class="client-avatar">👤</div>
+                        <div class="client-details">
+                            <h4>李经理</h4>
+                            <p>某科技公司市场总监</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"从概念到最终成品，整个设计过程都非常专业。设计师们不仅技术精湛，更重要的是真正理解我们的品牌理念。"</p>
+                    <div class="client-info">
+                        <div class="client-avatar">👤</div>
+                        <div class="client-details">
+                            <h4>王女士</h4>
+                            <p>某时尚品牌创始人</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 联系我们 -->
     <section id="contact" class="section">
         <div class="container">
             <h2 class="section-title">联系我们</h2>
             <p class="section-subtitle">如果您有任何问题或合作意向，请随时联系我们</p>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>让我们聊聊您的项目</h3>
+            <div class="contact-centered">
+                <div class="contact-info-list">
                     <div class="contact-detail">
                         <div class="contact-icon">📍</div>
                         <div class="contact-text">
@@ -854,12 +866,11 @@
                     <div class="contact-detail">
                         <div class="contact-icon">📞</div>
                         <div class="contact-text">
-                            <h4>电话</h4>
+                            <h4>电话(微信同号)</h4>
                             <p>
-                                <span style="display: inline-block; width: 80px;">平面设计</span>18369284555 <br>
-                                <span style="display: inline-block; width: 80px;">室内设计</span>18363701107 <br>
-                                <span style="display: inline-block; width: 80px;"></span>15376329080
-
+                                <span style="display: inline-block;width: 80px;">平面设计：</span>18369284555<br>
+                                <span style="display: inline-block;width: 80px;">室内设计：</span>18363701107 <br>
+                                <span style="display: inline-block;width: 80px;"></span>15376329080
                             </p>
                         </div>
                     </div>
@@ -878,28 +889,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="contact-form">
-                    <form>
-                        <div class="form-group">
-                            <input type="text" placeholder="您的姓名" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" placeholder="您的邮箱" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" placeholder="您的电话">
-                        </div>
-                        <div class="form-group">
-                            <textarea placeholder="请描述您的项目需求" required></textarea>
-                        </div>
-                        <button type="submit" class="btn">发送消息</button>
-                    </form>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- 页脚 -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -973,7 +966,8 @@
 
         // 作品筛选功能
         document.querySelectorAll('.filter-btn').forEach(button => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function (e) {
+                e.stopPropagation(); // 防止触发父级跳转
                 // 移除所有激活状态
                 document.querySelectorAll('.filter-btn').forEach(btn => {
                     btn.classList.remove('active');
@@ -986,16 +980,6 @@
                 console.log(`筛选类别: ${this.textContent}`);
             });
         });
-
-        // 表单提交处理
-        const contactForm = document.querySelector('.contact-form form');
-        if (contactForm) {
-            contactForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-                alert('感谢您的留言！我们将尽快与您联系。');
-                this.reset();
-            });
-        }
     </script>
 </body>
 
